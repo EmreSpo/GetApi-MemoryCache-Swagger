@@ -8,7 +8,9 @@ GETAPI
 
 2-Terminal ekranın şu komut yazılır:
 
-dotnet run
+  ```Csharp
+  dotnet run
+  ```
 
 3-localhost:xxxx/api/users local linkine otomatik olarak yönlendirilir.
 
