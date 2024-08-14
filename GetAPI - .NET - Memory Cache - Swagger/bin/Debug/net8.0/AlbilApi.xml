@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AlbilApi</name>
+    </assembly>
+    <members>
+        <member name="T:YourNamespace.Controllers.UsersController">
+            <summary>
+            API'yi kullanıcı bilgileri ile yönetir.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            <summary>
+            UsersController sınıfının bir örneğini oluşturur.
+            </summary>
+            <param name="httpClient">HTTP istemcisi</param>
+            <param name="memoryCache">Bellek önbelleği</param>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.Get">
+            <summary>
+            Kullanıcı listesini alır. Veriler önbellekten alınırsa, API'ye bir istek yapılmaz.
+            </summary>
+            <returns>Kullanıcıların listesi</returns>
+        </member>
+        <member name="T:Geo">
+            <summary>
+            Represents a geographical location.
+            </summary>
+        </member>
+        <member name="P:Geo.Lat">
+            <summary>
+            Latitude coordinate.
+            </summary>
+        </member>
+        <member name="P:Geo.Lng">
+            <summary>
+            Longitude coordinate.
+            </summary>
+        </member>
+        <member name="T:Address">
+            <summary>
+            Represents a user address.
+            </summary>
+        </member>
+        <member name="P:Address.Street">
+            <summary>
+            Street address.
+            </summary>
+        </member>
+        <member name="P:Address.Suite">
+            <summary>
+            Suite or apartment number.
+            </summary>
+        </member>
+        <member name="P:Address.City">
+            <summary>
+            City name.
+            </summary>
+        </member>
+        <member name="P:Address.Zipcode">
+            <summary>
+            Zip code.
+            </summary>
+        </member>
+        <member name="P:Address.Geo">
+            <summary>
+            Geographical location information.
+            </summary>
+        </member>
+        <member name="T:Company">
+            <summary>
+            Represents a company.
+            </summary>
+        </member>
+        <member name="P:Company.Name">
+            <summary>
+            Name of the company.
+            </summary>
+        </member>
+        <member name="P:Company.CatchPhrase">
+            <summary>
+            Catchphrase of the company.
+            </summary>
+        </member>
+        <member name="P:Company.Bs">
+            <summary>
+            Business sector of the company.
+            </summary>
+        </member>
+        <member name="T:User">
+            <summary>
+            Represents a user.
+            </summary>
+        </member>
+        <member name="P:User.Id">
+            <summary>
+            Unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:User.Name">
+            <summary>
+            Full name of the user.
+            </summary>
+        </member>
+        <member name="P:User.Username">
+            <summary>
+            Username of the user.
+            </summary>
+        </member>
+        <member name="P:User.Email">
+            <summary>
+            Email address of the user.
+            </summary>
+        </member>
+        <member name="P:User.Address">
+            <summary>
+            Address information of the user.
+            </summary>
+        </member>
+        <member name="P:User.Phone">
+            <summary>
+            Phone number of the user.
+            </summary>
+        </member>
+        <member name="P:User.Website">
+            <summary>
+            Website URL of the user.
+            </summary>
+        </member>
+        <member name="P:User.Company">
+            <summary>
+            Company information related to the user.
+            </summary>
+        </member>
+    </members>
+</doc>
