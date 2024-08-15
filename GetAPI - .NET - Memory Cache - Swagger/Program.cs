@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using YourNamespace.Services; // UserService'in bulunduğu namespace'i ekleyin
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
+
+// UserService ve IUserService'i DI (Dependency Injection) container'a ekleyin
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Swagger'ı ekleyin ve XML yorumlarını dahil edin
 builder.Services.AddEndpointsApiExplorer();
@@ -54,3 +58,4 @@ app.MapGet("/", (HttpContext context) =>
 app.MapControllers();
 
 app.Run("https://localhost:7061/");
+//https://localhost:7061/api/users

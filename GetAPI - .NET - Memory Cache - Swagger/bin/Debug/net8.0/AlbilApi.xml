@@ -9,16 +9,46 @@
             API'yi kullanıcı bilgileri ile yönetir.
             </summary>
         </member>
-        <member name="M:YourNamespace.Controllers.UsersController.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+        <member name="M:YourNamespace.Controllers.UsersController.#ctor(YourNamespace.Services.IUserService)">
             <summary>
             UsersController sınıfının bir örneğini oluşturur.
+            </summary>
+            <param name="userService">Kullanıcı hizmeti</param>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.Get">
+            <summary>
+            Kullanıcı listesini alır.
+            </summary>
+            <returns>Kullanıcıların listesi</returns>
+        </member>
+        <member name="T:YourNamespace.Services.UserService">
+            <summary>
+            Kullanıcı hizmeti, kullanıcı bilgilerini yönetmek için kullanılır.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            <summary>
+            UserService sınıfının bir örneğini oluşturur.
             </summary>
             <param name="httpClient">HTTP istemcisi</param>
             <param name="memoryCache">Bellek önbelleği</param>
         </member>
-        <member name="M:YourNamespace.Controllers.UsersController.Get">
+        <member name="M:YourNamespace.Services.UserService.GetUsersAsync">
             <summary>
-            Kullanıcı listesini alır. Veriler önbellekten alınırsa, API'ye bir istek yapılmaz.
+            Kullanıcı listesini asenkron olarak alır.
+            </summary>
+            <returns>Kullanıcıların listesi</returns>
+            <exception cref="T:System.Net.Http.HttpRequestException">API isteği başarısız olduğunda oluşur.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Kullanıcı bulunamadığında oluşur.</exception>
+        </member>
+        <member name="T:YourNamespace.Services.IUserService">
+            <summary>
+            Kullanıcı hizmeti arayüzü.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Services.IUserService.GetUsersAsync">
+            <summary>
+            Kullanıcı listesini asenkron olarak alır.
             </summary>
             <returns>Kullanıcıların listesi</returns>
         </member>
