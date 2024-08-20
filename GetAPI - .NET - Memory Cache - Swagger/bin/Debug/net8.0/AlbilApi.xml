@@ -9,17 +9,62 @@
             API'yi kullanıcı bilgileri ile yönetir.
             </summary>
         </member>
-        <member name="M:YourNamespace.Controllers.UsersController.#ctor(YourNamespace.Services.IUserService)">
+        <member name="M:YourNamespace.Controllers.UsersController.#ctor(YourNamespace.Services.IUserService,YourNamespace.Data.AppDbContext)">
             <summary>
             UsersController sınıfının bir örneğini oluşturur.
             </summary>
             <param name="userService">Kullanıcı hizmeti</param>
+            <param name="context">Veritabanı bağlamı</param>
         </member>
         <member name="M:YourNamespace.Controllers.UsersController.Get">
             <summary>
             Kullanıcı listesini alır.
             </summary>
             <returns>Kullanıcıların listesi</returns>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.CreateUser(User)">
+            <summary>
+            Yeni bir kullanıcı oluşturur ve veritabanına kaydeder.
+            </summary>
+            <param name="user">Oluşturulacak kullanıcı bilgileri</param>
+            <returns>Oluşturulan kullanıcı</returns>
+        </member>
+        <member name="T:YourNamespace.Data.AppDbContext">
+            <summary>
+            Veritabanı bağlamını temsil eder.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Data.AppDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{YourNamespace.Data.AppDbContext})">
+            <summary>
+            AppDbContext sınıfının bir örneğini oluşturur.
+            </summary>
+            <param name="options">Veritabanı bağlamı seçenekleri</param>
+        </member>
+        <member name="P:YourNamespace.Data.AppDbContext.Users">
+            <summary>
+            Kullanıcılar tablosu.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Data.AppDbContext.Companies">
+            <summary>
+            Şirketler tablosu.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Data.AppDbContext.Addresses">
+            <summary>
+            Adresler tablosu.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Data.AppDbContext.Geos">
+            <summary>
+            Coğrafi bilgiler tablosu.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Data.AppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Model yapılandırmasını tanımlar.
+            </summary>
+            <param name="modelBuilder">Model yapılandırıcı</param>
         </member>
         <member name="T:YourNamespace.Services.UserService">
             <summary>
@@ -52,9 +97,33 @@
             </summary>
             <returns>Kullanıcıların listesi</returns>
         </member>
-        <member name="T:Geo">
+        <member name="T:AlbilApi.Migrations.CreateUsersTable">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.CreateUsersTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.CreateUsersTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.CreateUsersTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:AlbilApi.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AlbilApi.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="P:Geo.Id">
             <summary>
-            Represents a geographical location.
+            Primary key for the Geo entity.
             </summary>
         </member>
         <member name="P:Geo.Lat">
@@ -70,6 +139,11 @@
         <member name="T:Address">
             <summary>
             Represents a user address.
+            </summary>
+        </member>
+        <member name="P:Address.Id">
+            <summary>
+            Primary key for the address.
             </summary>
         </member>
         <member name="P:Address.Street">
@@ -100,6 +174,11 @@
         <member name="T:Company">
             <summary>
             Represents a company.
+            </summary>
+        </member>
+        <member name="P:Company.Id">
+            <summary>
+            Primary key for the company.
             </summary>
         </member>
         <member name="P:Company.Name">
