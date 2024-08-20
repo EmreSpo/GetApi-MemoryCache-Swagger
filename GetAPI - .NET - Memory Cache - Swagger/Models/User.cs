@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 
-/// <summary>
-/// Represents a geographical location.
-/// </summary>
 public class Geo
 {
+    /// <summary>
+    /// Primary key for the Geo entity.
+    /// </summary>
+    public int Id { get; set; }
+
     /// <summary>
     /// Latitude coordinate.
     /// </summary>
@@ -23,6 +25,11 @@ public class Geo
 /// </summary>
 public class Address
 {
+    /// <summary>
+    /// Primary key for the address.
+    /// </summary>
+    public int Id { get; set; }  // Birincil anahtar olarak kullanılacak
+
     /// <summary>
     /// Street address.
     /// </summary>
@@ -60,6 +67,11 @@ public class Address
 public class Company
 {
     /// <summary>
+    /// Primary key for the company.
+    /// </summary>
+    public int Id { get; set; }  // Birincil anahtar olarak kullanılacak
+
+    /// <summary>
     /// Name of the company.
     /// </summary>
     [JsonPropertyName("name")]
@@ -86,8 +98,7 @@ public class User
     /// <summary>
     /// Unique identifier of the user.
     /// </summary>
-    [JsonPropertyName("id")]
-    public int? Id { get; set; }
+    public int Id { get; set; } // Primary key olarak int kullanılabilir.
 
     /// <summary>
     /// Full name of the user.
