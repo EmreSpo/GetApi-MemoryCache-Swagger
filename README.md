@@ -31,6 +31,14 @@ GETAPI
 Dependency Injection Mekanizmalarını kullanarak UserController içerisinde yazmış olduğum API'deki kodları farklı bir sınıftaki fonksiyona aktarıp UserControllerdaki fonksiyon içerisinden o sınıfın objesi üzerinden ilgili fonksiyona istek attım.
 Bunu ekleyerek arasındaki bağımlılıkları daha yönetilebilir ve test edilebilir hale getirmeye çalıştım.
 
+4.Güncelleme:
+
+1-Entity Framework Orm yapısını kullanarak User modelinden bir objeyi veritabanına kaydetme eklendi.
+
+2-Post API oluşturup API'nin body'sine User modeline ait veriyi eklenecek.
+
+3-Daha sonra istek atılan API' üzerinden ilgili modele Entity Framework yardımıyla ile SQL veritabanına kaydedilecek.
+
 
 
 
