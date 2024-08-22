@@ -13,7 +13,7 @@ GETAPI
   ```
 
 3-localhost:xxxx/api/users local linkine otomatik olarak yönlendirilir.
-
+-------------------------------------------------------------------------
 1.Güncelleme:
 
 1-Program.cs ile UsersController.cs dosyaları, Memory Cache için güncelleme yapıldı.
@@ -21,15 +21,18 @@ GETAPI
 2-Artık program başlatıldıktan sonra eğer cache içerisi boş ise konsolda "Cache miss - Veri API'den alındı ve cache'e eklendi." mesajı verecek.
 
 3-Eğer cache içerisi dolu ise konsolda "Cache hit - Veri cache'den alındı." mesajı verecek.
+----------------------------------------------------------------------------------------------
 
 2.Güncelleme:
 
 1-Programa swagger özelliği eklendi. Bu özelliğin daha düzgün hale getirtmek için çalışılmaya devam edilecek.
+---------------------------------------------------------------------------------------------------------------
 
 3.Güncelleme:
 
 Dependency Injection Mekanizmalarını kullanarak UserController içerisinde yazmış olduğum API'deki kodları farklı bir sınıftaki fonksiyona aktarıp UserControllerdaki fonksiyon içerisinden o sınıfın objesi üzerinden ilgili fonksiyona istek attım.
 Bunu ekleyerek arasındaki bağımlılıkları daha yönetilebilir ve test edilebilir hale getirmeye çalıştım.
+------------------------------------------------------------------------------------------------------
 
 4.Güncelleme:
 
