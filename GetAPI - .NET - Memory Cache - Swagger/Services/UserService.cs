@@ -1,13 +1,16 @@
 using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using YourNamespace.Models; // User sınıfını burada tanımlayın
 
 namespace YourNamespace.Services
 {
     /// <summary>
-    /// Kullanıcı hizmeti, kullanıcı bilgilerini yönetmek için kullanılır.
+    /// Kullanıcı bilgilerini yönetmek için kullanılan servis sınıfı.
     /// </summary>
     public class UserService : IUserService
     {
@@ -19,41 +22,48 @@ namespace YourNamespace.Services
         /// <summary>
         /// UserService sınıfının bir örneğini oluşturur.
         /// </summary>
-        /// <param name="httpClient">HTTP istemcisi</param>
+        /// <param name="httpClient">HttpClient nesnesi</param>
         /// <param name="memoryCache">Bellek önbelleği</param>
         public UserService(HttpClient httpClient, IMemoryCache memoryCache)
         {
-            _httpClient = httpClient;
-            _memoryCache = memoryCache;
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
         }
 
         /// <summary>
         /// Kullanıcı listesini asenkron olarak alır.
         /// </summary>
         /// <returns>Kullanıcıların listesi</returns>
-        /// <exception cref="HttpRequestException">API isteği başarısız olduğunda oluşur.</exception>
-        /// <exception cref="KeyNotFoundException">Kullanıcı bulunamadığında oluşur.</exception>
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            // Cache'de veri var mı kontrol et
-            if (!_memoryCache.TryGetValue(_cacheKey, out List<User>? users))
+            // Cache'de kullanıcıları arıyoruz
+            if (!_memoryCache.TryGetValue(_cacheKey, out IEnumerable<User>? users))
             {
+                // Cache'de yoksa, JSONPlaceholder'dan alıyoruz
                 var response = await _httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    throw new HttpRequestException("API request failed.");
+                    var content = await response.Content.ReadAsStringAsync();
+                    users = JsonSerializer.Deserialize<IEnumerable<User>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                }
+                else
+                {
+                    throw new Exception("Failed to retrieve data from JSONPlaceholder.");
                 }
 
-                var json = await response.Content.ReadAsStringAsync();
-                // JSON deserialization işlemi için güvenli kontrol ekle
-                users = JsonSerializer.Deserialize<List<User>>(json) ?? new List<User>();
-
-                if (users.Count == 0)
+                // Null kontrolü yapıyoruz
+                if (users == null)
                 {
-                    throw new KeyNotFoundException("No users found.");
+                    users = Enumerable.Empty<User>(); // Boş bir liste döndürüyoruz
+                    Console.WriteLine("No users found in JSONPlaceholder.");
+                }
+                else if (!users.Any())
+                {
+                    Console.WriteLine("No users found in JSONPlaceholder.");
                 }
 
+                // Cache'e ekliyoruz
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = _cacheExpiration,
@@ -61,32 +71,93 @@ namespace YourNamespace.Services
                 };
                 _memoryCache.Set(_cacheKey, users, cacheEntryOptions);
 
-                Console.WriteLine("Cache miss - Veri API'den alındı ve cache'e eklendi.");
+                Console.WriteLine("Cache miss - Veri JSONPlaceholder'dan alındı ve cache'e eklendi.");
             }
             else
             {
                 Console.WriteLine("Cache hit - Veri cache'den alındı.");
             }
 
-            // Kullanıcı listesinin null olup olmadığını kontrol et
-            if (users == null)
+            return users ?? Enumerable.Empty<User>(); // Null ise boş liste döndür
+        }
+
+        /// <summary>
+        /// Belirli bir kullanıcıyı ID'ye göre alır.
+        /// </summary>
+        /// <param name="id">Kullanıcı ID'si</param>
+        /// <returns>Bulunan kullanıcı</returns>
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var users = await GetUsersAsync();
+            var user = users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
             {
-                users = new List<User>();
+                throw new KeyNotFoundException($"User with id {id} not found.");
             }
 
-            return users;
+            return user;
+        }
+
+        /// <summary>
+        /// Yeni bir kullanıcı oluşturur.
+        /// </summary>
+        /// <param name="user">Oluşturulacak kullanıcı</param>
+        public Task AddUserAsync(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            // JSONPlaceholder API üzerinde veri ekleme işlemi yapamayacağınız için bu metodda boş bir işlem yapıyoruz.
+            // Gerçek projelerde burada API'ye istek yaparak kullanıcı ekleme işlemi gerçekleştirilir.
+
+            _memoryCache.Remove(_cacheKey); // Cache'i temizliyoruz
+
+            return Task.CompletedTask; // Boş bir Task döndür
+        }
+
+        /// <summary>
+        /// Bir kullanıcıyı günceller.
+        /// </summary>
+        /// <param name="user">Güncellenecek kullanıcı</param>
+        public Task UpdateUserAsync(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            // JSONPlaceholder API üzerinde veri güncelleme işlemi yapamayacağınız için bu metodda boş bir işlem yapıyoruz.
+            // Gerçek projelerde burada API'ye istek yaparak kullanıcı güncelleme işlemi gerçekleştirilir.
+
+            _memoryCache.Remove(_cacheKey); // Cache'i temizliyoruz
+
+            return Task.CompletedTask; // Boş bir Task döndür
+        }
+
+        /// <summary>
+        /// Bir kullanıcıyı siler.
+        /// </summary>
+        /// <param name="id">Silinecek kullanıcı ID'si</param>
+        public Task DeleteUserAsync(int id)
+        {
+            // Senkron GetUsersAsync çağrısının yerine async bir yöntem kullanmak daha iyi olabilir
+            var users = GetUsersAsync().Result;
+            var user = users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with id {id} not found.");
+            }
+
+            // JSONPlaceholder API üzerinde veri silme işlemi yapamayacağınız için bu metodda boş bir işlem yapıyoruz.
+            // Gerçek projelerde burada API'ye istek yaparak kullanıcı silme işlemi gerçekleştirilir.
+
+            _memoryCache.Remove(_cacheKey); // Cache'i temizliyoruz
+
+            return Task.CompletedTask; // Boş bir Task döndür
         }
     }
-
-    /// <summary>
-    /// Kullanıcı hizmeti arayüzü.
-    /// </summary>
-    public interface IUserService
-    {
-        /// <summary>
-        /// Kullanıcı listesini asenkron olarak alır.
-        /// </summary>
-        /// <returns>Kullanıcıların listesi</returns>
-        Task<List<User>> GetUsersAsync();
-    }
 }
+
+
+
+
