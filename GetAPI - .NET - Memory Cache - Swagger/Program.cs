@@ -2,25 +2,49 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore; // Entity Framework Core için ekle
-using YourNamespace.Services; // UserService'in bulunduğu namespace'i ekle
-using YourNamespace.Data; // AppDbContext'in bulunduğu namespace'i ekle
+using Microsoft.EntityFrameworkCore;
+using YourNamespace.Data;
+using YourNamespace.Models;
+using YourNamespace.Repositories;
+using YourNamespace.Services;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabanı bağlantısı için DbContext ekle
+// Veritabanı bağlantı dizesini al
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// CORS yapılandırması
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 // Servisleri ekle
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
+
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
 
-// UserService ve IUserService'i DI (Dependency Injection) container'a ekle
+// Repository ve servisleri ekle
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-// Swagger'ı ekleyin ve XML yorumlarını dahil et
+// Swagger yapılandırması
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -31,7 +55,6 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Kullanıcı API'si, JSONPlaceholder'dan kullanıcı bilgilerini alır.",
     });
 
-    // XML yorumlarını dahil edin
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -39,7 +62,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Hata ayıklama sayfasını ve Swagger'ı yalnızca geliştirme ortamında kullanımı
+// Hata ayıklama ve Swagger ayarları (geliştirme ortamında)
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -47,22 +70,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlbilApi v1");
-        c.RoutePrefix = string.Empty; // Swagger UI'nin kök URL'de çalışmasını sağlar
+        c.RoutePrefix = string.Empty; // Swagger UI ana sayfa olarak kullanılacak
     });
 }
 
+// HTTPS yönlendirme ve yetkilendirme
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-// Root URL yönlendirmesi
+// Ana sayfaya yönlendirme
 app.MapGet("/", (HttpContext context) =>
 {
-    context.Response.Redirect("/swagger"); // Kullanıcıyı Swagger UI'ye yönlendir
+    context.Response.Redirect("/swagger");
     return Task.CompletedTask;
 });
 
+// API denetleyicilerini ekle
 app.MapControllers();
 
+// Uygulamayı çalıştır
 app.Run("https://localhost:7061/");
 
 //https://localhost:7061/api/users
