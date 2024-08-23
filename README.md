@@ -46,6 +46,14 @@ Bunu ekleyerek arasındaki bağımlılıkları daha yönetilebilir ve test edile
 
 3-Daha sonra istek atılan API' üzerinden ilgili modele Entity Framework yardımıyla ile SQL veritabanına kaydedilecek.
 
+-----------------------------------------------------------------------------------------------------------------------
+
+5.Güncelleme:
+
+1-Repoaitory Pattern projeye uygulandı.
+
+2-Kullanıcılar için  PUT-DELETE-GET apilerini eklendi. Böylece bunları kullanarak kullacı silme, kullanıcı güncelleme ve kullanıcı getirme özellikleri eklendi.
+
 
 
 
