@@ -9,12 +9,11 @@
             API'yi kullanıcı bilgileri ile yönetir.
             </summary>
         </member>
-        <member name="M:YourNamespace.Controllers.UsersController.#ctor(YourNamespace.Services.IUserService,YourNamespace.Data.AppDbContext)">
+        <member name="M:YourNamespace.Controllers.UsersController.#ctor(YourNamespace.Services.IUserService)">
             <summary>
             UsersController sınıfının bir örneğini oluşturur.
             </summary>
             <param name="userService">Kullanıcı hizmeti</param>
-            <param name="context">Veritabanı bağlamı</param>
         </member>
         <member name="M:YourNamespace.Controllers.UsersController.Get">
             <summary>
@@ -22,21 +21,43 @@
             </summary>
             <returns>Kullanıcıların listesi</returns>
         </member>
-        <member name="M:YourNamespace.Controllers.UsersController.CreateUser(User)">
+        <member name="M:YourNamespace.Controllers.UsersController.GetUser(System.Int32)">
             <summary>
-            Yeni bir kullanıcı oluşturur ve veritabanına kaydeder.
+            Belirli bir kullanıcıyı ID'ye göre getirir.
+            </summary>
+            <param name="id">Kullanıcı ID'si</param>
+            <returns>Belirli bir kullanıcı</returns>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.CreateUser(YourNamespace.Models.User)">
+            <summary>
+            Yeni bir kullanıcı oluşturur.
             </summary>
             <param name="user">Oluşturulacak kullanıcı bilgileri</param>
             <returns>Oluşturulan kullanıcı</returns>
         </member>
+        <member name="M:YourNamespace.Controllers.UsersController.UpdateUser(System.Int32,YourNamespace.Models.User)">
+            <summary>
+            Belirli bir kullanıcıyı günceller.
+            </summary>
+            <param name="id">Güncellenecek kullanıcı ID'si</param>
+            <param name="user">Güncellenmiş kullanıcı bilgileri</param>
+            <returns>Güncellenen kullanıcı</returns>
+        </member>
+        <member name="M:YourNamespace.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Belirli bir kullanıcıyı siler.
+            </summary>
+            <param name="id">Silinecek kullanıcı ID'si</param>
+            <returns>Silme işlemi sonucu</returns>
+        </member>
         <member name="T:YourNamespace.Data.AppDbContext">
             <summary>
-            Veritabanı bağlamını temsil eder.
+            Veritabanı bağlamını temsil eder
             </summary>
         </member>
         <member name="M:YourNamespace.Data.AppDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{YourNamespace.Data.AppDbContext})">
             <summary>
-            AppDbContext sınıfının bir örneğini oluşturur.
+            AppDbContext sınıfının bir örneğini oluşturur
             </summary>
             <param name="options">Veritabanı bağlamı seçenekleri</param>
         </member>
@@ -62,29 +83,233 @@
         </member>
         <member name="M:YourNamespace.Data.AppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
-            Model yapılandırmasını tanımlar.
+            Model yapılandırmasını tanımlar
             </summary>
             <param name="modelBuilder">Model yapılandırıcı</param>
         </member>
-        <member name="T:YourNamespace.Services.UserService">
+        <member name="T:YourNamespace.Models.Address">
             <summary>
-            Kullanıcı hizmeti, kullanıcı bilgilerini yönetmek için kullanılır.
+            Adres bilgilerini temsil eden sınıf.
             </summary>
         </member>
-        <member name="M:YourNamespace.Services.UserService.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+        <member name="P:YourNamespace.Models.Address.Id">
             <summary>
-            UserService sınıfının bir örneğini oluşturur.
+            Adresin benzersiz kimliği.
             </summary>
-            <param name="httpClient">HTTP istemcisi</param>
-            <param name="memoryCache">Bellek önbelleği</param>
         </member>
-        <member name="M:YourNamespace.Services.UserService.GetUsersAsync">
+        <member name="P:YourNamespace.Models.Address.Street">
             <summary>
-            Kullanıcı listesini asenkron olarak alır.
+            Sokağın adı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Address.Suite">
+            <summary>
+            Ek bilgi veya daire numarası.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Address.City">
+            <summary>
+            Şehir adı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Address.Zipcode">
+            <summary>
+            Posta kodu.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Address.Geo">
+            <summary>
+            Adrese ait coğrafi bilgiler.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Address.Users">
+            <summary>
+            Adrese ait kullanıcılar.
+            </summary>
+        </member>
+        <member name="T:YourNamespace.Models.Company">
+            <summary>
+            Şirket bilgilerini temsil eden sınıf.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Company.Id">
+            <summary>
+            Şirketin benzersiz kimliği.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Company.Name">
+            <summary>
+            Şirketin adı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Company.CatchPhrase">
+            <summary>
+            Şirketin sloganı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Company.Bs">
+            <summary>
+            Şirketin iş tanımı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Company.Users">
+            <summary>
+            Şirkete ait kullanıcılar.
+            </summary>
+        </member>
+        <member name="T:YourNamespace.Models.Geo">
+            <summary>
+            Coğrafi verileri temsil eden sınıf.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Geo.Id">
+            <summary>
+            Coğrafi verinin benzersiz kimliği.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Geo.Lat">
+            <summary>
+            Enlem (latitude) bilgisi.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Geo.Lng">
+            <summary>
+            Boylam (longitude) bilgisi.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Geo.AddressId">
+            <summary>
+            İlgili adresin kimliği.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.Geo.Address">
+            <summary>
+            Coğrafi verinin ilişkili olduğu adres.
+            </summary>
+        </member>
+        <member name="T:YourNamespace.Models.User">
+            <summary>
+            Kullanıcı bilgilerini temsil eden model sınıfı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Id">
+            <summary>
+            Kullanıcının benzersiz kimliği.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Name">
+            <summary>
+            Kullanıcının adı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Username">
+            <summary>
+            Kullanıcının kullanıcı adı.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Email">
+            <summary>
+            Kullanıcının e-posta adresi.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.AddressId">
+            <summary>
+            Adres kimliği (Foreign Key).
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Address">
+            <summary>
+            Kullanıcının adresi.
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.CompanyId">
+            <summary>
+            Şirket kimliği (Foreign Key).
+            </summary>
+        </member>
+        <member name="P:YourNamespace.Models.User.Company">
+            <summary>
+            Kullanıcının çalıştığı şirket.
+            </summary>
+        </member>
+        <member name="T:YourNamespace.Repositories.IRepository`1">
+            <summary>
+            Generic bir repository arayüzü. 
+            </summary>
+            <typeparam name="T">İşlem yapılacak entity tipi</typeparam>
+        </member>
+        <member name="M:YourNamespace.Repositories.IRepository`1.GetAllAsync">
+            <summary>
+            Tüm entity'leri asenkron olarak getirir.
+            </summary>
+            <returns>Entity'lerin listesi</returns>
+        </member>
+        <member name="M:YourNamespace.Repositories.IRepository`1.GetByIdAsync(System.Int32)">
+            <summary>
+            Belirli bir ID'ye sahip entity'yi asenkron olarak getirir.
+            </summary>
+            <param name="id">Entity'nin ID'si</param>
+            <returns>Bulunan entity veya null</returns>
+        </member>
+        <member name="M:YourNamespace.Repositories.IRepository`1.AddAsync(`0)">
+            <summary>
+            Yeni bir entity'yi asenkron olarak ekler.
+            </summary>
+            <param name="entity">Eklenecek entity</param>
+        </member>
+        <member name="M:YourNamespace.Repositories.IRepository`1.UpdateAsync(`0)">
+            <summary>
+            Bir entity'yi asenkron olarak günceller.
+            </summary>
+            <param name="entity">Güncellenecek entity</param>
+        </member>
+        <member name="M:YourNamespace.Repositories.IRepository`1.DeleteAsync(System.Int32)">
+            <summary>
+            Belirli bir ID'ye sahip entity'yi asenkron olarak siler.
+            </summary>
+            <param name="id">Silinecek entity'nin ID'si</param>
+        </member>
+        <member name="T:YourNamespace.Repositories.UserRepository">
+            <summary>
+            Kullanıcılarla ilgili veritabanı işlemlerini gerçekleştiren repository sınıfı.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.#ctor(YourNamespace.Data.AppDbContext)">
+            <summary>
+            UserRepository sınıfının bir örneğini oluşturur.
+            </summary>
+            <param name="context">Veritabanı bağlamı</param>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.GetAllAsync">
+            <summary>
+            Tüm kullanıcıları asenkron olarak getirir.
             </summary>
             <returns>Kullanıcıların listesi</returns>
-            <exception cref="T:System.Net.Http.HttpRequestException">API isteği başarısız olduğunda oluşur.</exception>
-            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Kullanıcı bulunamadığında oluşur.</exception>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            Belirli bir ID'ye sahip kullanıcıyı asenkron olarak getirir.
+            </summary>
+            <param name="id">Kullanıcı ID'si</param>
+            <returns>Bulunan kullanıcı veya null</returns>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.AddAsync(YourNamespace.Models.User)">
+            <summary>
+            Yeni bir kullanıcıyı asenkron olarak ekler.
+            </summary>
+            <param name="entity">Eklenecek kullanıcı</param>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.UpdateAsync(YourNamespace.Models.User)">
+            <summary>
+            Bir kullanıcıyı asenkron olarak günceller.
+            </summary>
+            <param name="entity">Güncellenecek kullanıcı</param>
+        </member>
+        <member name="M:YourNamespace.Repositories.UserRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Belirli bir ID'ye sahip kullanıcıyı asenkron olarak siler.
+            </summary>
+            <param name="id">Silinecek kullanıcı ID'si</param>
         </member>
         <member name="T:YourNamespace.Services.IUserService">
             <summary>
@@ -97,17 +322,73 @@
             </summary>
             <returns>Kullanıcıların listesi</returns>
         </member>
-        <member name="T:AlbilApi.Migrations.CreateUsersTable">
-            <inheritdoc />
+        <member name="M:YourNamespace.Services.IUserService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            ID'ye göre kullanıcıyı asenkron olarak alır.
+            </summary>
+            <param name="id">Kullanıcı ID'si</param>
+            <returns>Bulunan kullanıcı</returns>
         </member>
-        <member name="M:AlbilApi.Migrations.CreateUsersTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="M:YourNamespace.Services.IUserService.AddUserAsync(YourNamespace.Models.User)">
+            <summary>
+            Yeni bir kullanıcıyı asenkron olarak oluşturur.
+            </summary>
+            <param name="user">Oluşturulacak kullanıcı</param>
         </member>
-        <member name="M:AlbilApi.Migrations.CreateUsersTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
+        <member name="M:YourNamespace.Services.IUserService.UpdateUserAsync(YourNamespace.Models.User)">
+            <summary>
+            Var olan bir kullanıcıyı asenkron olarak günceller.
+            </summary>
+            <param name="user">Güncellenecek kullanıcı</param>
         </member>
-        <member name="M:AlbilApi.Migrations.CreateUsersTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
+        <member name="M:YourNamespace.Services.IUserService.DeleteUserAsync(System.Int32)">
+            <summary>
+            ID'ye göre bir kullanıcıyı asenkron olarak siler.
+            </summary>
+            <param name="id">Silinecek kullanıcı ID'si</param>
+        </member>
+        <member name="T:YourNamespace.Services.UserService">
+            <summary>
+            Kullanıcı bilgilerini yönetmek için kullanılan servis sınıfı.
+            </summary>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            <summary>
+            UserService sınıfının bir örneğini oluşturur.
+            </summary>
+            <param name="httpClient">HttpClient nesnesi</param>
+            <param name="memoryCache">Bellek önbelleği</param>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.GetUsersAsync">
+            <summary>
+            Kullanıcı listesini asenkron olarak alır.
+            </summary>
+            <returns>Kullanıcıların listesi</returns>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            Belirli bir kullanıcıyı ID'ye göre alır.
+            </summary>
+            <param name="id">Kullanıcı ID'si</param>
+            <returns>Bulunan kullanıcı</returns>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.AddUserAsync(YourNamespace.Models.User)">
+            <summary>
+            Yeni bir kullanıcı oluşturur.
+            </summary>
+            <param name="user">Oluşturulacak kullanıcı</param>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.UpdateUserAsync(YourNamespace.Models.User)">
+            <summary>
+            Bir kullanıcıyı günceller.
+            </summary>
+            <param name="user">Güncellenecek kullanıcı</param>
+        </member>
+        <member name="M:YourNamespace.Services.UserService.DeleteUserAsync(System.Int32)">
+            <summary>
+            Bir kullanıcıyı siler.
+            </summary>
+            <param name="id">Silinecek kullanıcı ID'si</param>
         </member>
         <member name="T:AlbilApi.Migrations.InitialCreate">
             <inheritdoc />
@@ -120,126 +401,6 @@
         </member>
         <member name="M:AlbilApi.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
-        </member>
-        <member name="P:Geo.Id">
-            <summary>
-            Primary key for the Geo entity.
-            </summary>
-        </member>
-        <member name="P:Geo.Lat">
-            <summary>
-            Latitude coordinate.
-            </summary>
-        </member>
-        <member name="P:Geo.Lng">
-            <summary>
-            Longitude coordinate.
-            </summary>
-        </member>
-        <member name="T:Address">
-            <summary>
-            Represents a user address.
-            </summary>
-        </member>
-        <member name="P:Address.Id">
-            <summary>
-            Primary key for the address.
-            </summary>
-        </member>
-        <member name="P:Address.Street">
-            <summary>
-            Street address.
-            </summary>
-        </member>
-        <member name="P:Address.Suite">
-            <summary>
-            Suite or apartment number.
-            </summary>
-        </member>
-        <member name="P:Address.City">
-            <summary>
-            City name.
-            </summary>
-        </member>
-        <member name="P:Address.Zipcode">
-            <summary>
-            Zip code.
-            </summary>
-        </member>
-        <member name="P:Address.Geo">
-            <summary>
-            Geographical location information.
-            </summary>
-        </member>
-        <member name="T:Company">
-            <summary>
-            Represents a company.
-            </summary>
-        </member>
-        <member name="P:Company.Id">
-            <summary>
-            Primary key for the company.
-            </summary>
-        </member>
-        <member name="P:Company.Name">
-            <summary>
-            Name of the company.
-            </summary>
-        </member>
-        <member name="P:Company.CatchPhrase">
-            <summary>
-            Catchphrase of the company.
-            </summary>
-        </member>
-        <member name="P:Company.Bs">
-            <summary>
-            Business sector of the company.
-            </summary>
-        </member>
-        <member name="T:User">
-            <summary>
-            Represents a user.
-            </summary>
-        </member>
-        <member name="P:User.Id">
-            <summary>
-            Unique identifier of the user.
-            </summary>
-        </member>
-        <member name="P:User.Name">
-            <summary>
-            Full name of the user.
-            </summary>
-        </member>
-        <member name="P:User.Username">
-            <summary>
-            Username of the user.
-            </summary>
-        </member>
-        <member name="P:User.Email">
-            <summary>
-            Email address of the user.
-            </summary>
-        </member>
-        <member name="P:User.Address">
-            <summary>
-            Address information of the user.
-            </summary>
-        </member>
-        <member name="P:User.Phone">
-            <summary>
-            Phone number of the user.
-            </summary>
-        </member>
-        <member name="P:User.Website">
-            <summary>
-            Website URL of the user.
-            </summary>
-        </member>
-        <member name="P:User.Company">
-            <summary>
-            Company information related to the user.
-            </summary>
         </member>
     </members>
 </doc>
